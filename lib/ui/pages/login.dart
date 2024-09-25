@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class BLSLoginPage extends StatefulWidget {
-  const BLSLoginPage({super.key});
+class TDLSLoginPage extends StatefulWidget {
+  const TDLSLoginPage({super.key});
 
   @override
-  State<BLSLoginPage> createState() => _BLSLoginPageState();
+  State<TDLSLoginPage> createState() => _TDLSLoginPageState();
 }
 
-class _BLSLoginPageState extends State<BLSLoginPage> {
+class _TDLSLoginPageState extends State<TDLSLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Hello World! This is BLS"),
+      body: Text("Hello World! This is TDLS"),
     );
   }
 }
