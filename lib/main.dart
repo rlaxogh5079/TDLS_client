@@ -1,6 +1,6 @@
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:client/utils/secure_storage.dart';
-import 'package:client/ui/pages/login.dart';
+import 'package:client/ui/pages/on_boarding.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -51,7 +51,7 @@ class _TDLSMainPageState extends State<TDLSMainPage> {
       body: FutureBuilder(
         future: SecureStorage().storage.read(key: "auto_login"),
         builder: (context, snapshot) {
-          return const TDLSLoginPage();
+          return const TDLSOnBoardingPage();
         },
       ),
     );
