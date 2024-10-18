@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:client/utils/secure_storage.dart';
 import 'package:client/ui/pages/login.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const TDLSApp());
@@ -9,18 +9,25 @@ void main() {
 
 class TDLSApp extends StatelessWidget {
   const TDLSApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(
       builder: (context, orientation, screenType) {
         return MaterialApp(
           title: 'TDLS',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color.fromARGB(255, 118, 143, 248)),
+              seedColor: const Color(0xFF8875FF),
+              brightness: Brightness.dark,
+            ).copyWith(
+              primary: const Color(0xFF8875FF),
+              secondary: const Color(0xFF9B87FF),
+            ),
             useMaterial3: true,
+            brightness: Brightness.dark,
           ),
-          debugShowCheckedModeBanner: false,
           home: const TDLSMainPage(title: 'TDLS'),
         );
       },
