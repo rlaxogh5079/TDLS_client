@@ -110,9 +110,10 @@ class _TDLSOnBoardingPageState extends State<TDLSOnBoardingPage> {
                       )
                     : FilledButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => const TDLSLoginPage()),
+                              builder: (context) => const TDLSLoginPage(),
+                            ),
                           );
                         },
                         style: FilledButton.styleFrom(
