@@ -1,5 +1,5 @@
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:client/ui/components/input.dart';
+import 'package:client/ui/widgets/input.dart';
 import 'package:client/ui/pages/register.dart';
 import 'package:flutter/material.dart';
 
