@@ -1,5 +1,6 @@
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:client/utils/secure_storage.dart';
 import 'package:client/ui/pages/login.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class _TDLSOnBoardingPageState extends State<TDLSOnBoardingPage> {
             }
             setState(() {});
           },
-          controlsMargin: EdgeInsets.fromLTRB(0, 0, 0, 30.h),
+          controlsMargin: EdgeInsets.fromLTRB(0, 0, 0, 20.h),
           globalHeader: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -109,7 +110,10 @@ class _TDLSOnBoardingPageState extends State<TDLSOnBoardingPage> {
                         ),
                       )
                     : FilledButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await SecureStorage()
+                              .storage
+                              .write(key: "show_intro", value: "1");
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const TDLSLoginPage(),
@@ -186,7 +190,7 @@ class _TDLSOnBoardingPageState extends State<TDLSOnBoardingPage> {
       children: [
         Image.asset(
           imagePath,
-          height: 40.h,
+          height: 50.h,
         ),
         SizedBox(height: 12.h),
         Text(
