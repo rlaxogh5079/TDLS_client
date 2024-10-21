@@ -1,6 +1,5 @@
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:client/utils/secure_storage.dart';
-import 'package:client/ui/pages/on_boarding.dart';
+import 'package:client/ui/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -47,13 +46,8 @@ class TDLSMainPage extends StatefulWidget {
 class _TDLSMainPageState extends State<TDLSMainPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: SecureStorage().storage.read(key: "auto_login"),
-        builder: (context, snapshot) {
-          return const TDLSOnBoardingPage();
-        },
-      ),
+    return const Scaffold(
+      body: SplashScreen(),
     );
   }
 }
