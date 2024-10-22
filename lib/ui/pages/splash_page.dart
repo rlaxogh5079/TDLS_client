@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => (showIntro == "1"
+          builder: (context) => (showIntro != "1"
               ? const TDLSOnBoardingPage()
               : autoLogin == "1"
                   ? const TDLSHomePage()
