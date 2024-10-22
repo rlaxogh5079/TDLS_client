@@ -1,6 +1,7 @@
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:client/ui/widgets/input.dart';
+import 'package:client/utils/form_checker.dart';
 import 'package:client/ui/pages/register.dart';
+import 'package:client/ui/widgets/input.dart';
 import 'package:flutter/material.dart';
 
 class TDLSLoginPage extends StatefulWidget {
@@ -15,7 +16,6 @@ class _TDLSLoginPageState extends State<TDLSLoginPage> {
   final _userPasswordTextFormKey = GlobalKey<FormState>();
   late TextEditingController _userIDController;
   late TextEditingController _userPasswordController;
-
   bool _isButtonEnabled = false;
 
   @override
@@ -68,6 +68,7 @@ class _TDLSLoginPageState extends State<TDLSLoginPage> {
                 labelText: "아이디",
                 hintText: "아이디를 입력하세요",
                 formKey: _userIDTextFormKey,
+                validator: validateID,
               ),
               TDLSInput(
                 controller: _userPasswordController,
@@ -75,6 +76,7 @@ class _TDLSLoginPageState extends State<TDLSLoginPage> {
                 hintText: "비밀번호를 입력하세요",
                 formKey: _userPasswordTextFormKey,
                 isPassword: true,
+                validator: validatePassword,
               ),
               SizedBox(height: 3.h),
               SizedBox(
