@@ -31,7 +31,9 @@ class _TDLSLoginPageState extends State<TDLSLoginPage> {
   void _updateButtonState() {
     setState(() {
       _isButtonEnabled = _userIDController.text.isNotEmpty &&
-          _userPasswordController.text.isNotEmpty;
+          _userPasswordController.text.isNotEmpty &&
+          validateID(_userIDController.text) == null &&
+          validatePassword(_userPasswordController.text) == null;
     });
   }
 
