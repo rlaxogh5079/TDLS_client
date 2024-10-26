@@ -2,7 +2,7 @@ import 'package:client/utils/model/response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const String host = "http://18.207.176.98:3000/";
+const String host = "http://18.207.176.98:3000";
 
 Future<ResponseWithAccessToken> login(String username, String password) async {
   Map data = {"username": username, "password": password};
