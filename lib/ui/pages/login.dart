@@ -1,7 +1,13 @@
+import 'package:client/main.dart';
+import 'package:client/ui/pages/home.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:client/utils/secure_storage.dart';
+import 'package:client/utils/model/response.dart';
 import 'package:client/utils/form_checker.dart';
 import 'package:client/ui/pages/register.dart';
 import 'package:client/ui/widgets/input.dart';
+import 'package:client/ui/dialog/dialog.dart';
+import 'package:client/utils/api/user.dart';
 import 'package:flutter/material.dart';
 
 class TDLSLoginPage extends StatefulWidget {
@@ -85,7 +91,68 @@ class _TDLSLoginPageState extends State<TDLSLoginPage> {
                 width: 80.w,
                 height: 5.h,
                 child: FilledButton(
-                  onPressed: _isButtonEnabled ? () {} : null,
+                  onPressed: _isButtonEnabled
+                      ? () async {
+                          ResponseWithAccessToken result = await login(
+                              _userIDController.text,
+                              _userPasswordController.text);
+                          String resultTitle = "";
+                          String resultContent = "";
+                          String token = "";
+                          bool success = false;
+                          switch (result.statusCode) {
+                            case 200:
+                              success = true;
+                              resultTitle = "로그인 성공";
+                              resultContent = result.message;
+                              token = result.accessToken ?? "";
+                              break;
+                            case 401:
+                              resultTitle = "로그인 실패";
+                              resultContent = result.message;
+                              break;
+                            case 500:
+                              resultTitle = "서버 내부 오류";
+                              resultContent = result.message;
+                              break;
+                          }
+                          if (success) {
+                            await SecureStorage()
+                                .storage
+                                .write(key: "auto_login", value: "true");
+                            await SecureStorage()
+                                .storage
+                                .write(key: "access_token", value: token);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TDLSHomePage(),
+                              ),
+                            );
+                          } else {
+                            createDialog(
+                              context,
+                              resultTitle,
+                              Text(resultContent),
+                              TextButton(
+                                child: const Text("닫기"),
+                                onPressed: () async {
+                                  Navigator.pop(context);
+                                  try {
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                  } catch (e) {
+                                    return;
+                                  }
+                                  return;
+                                },
+                              ),
+                              null,
+                              false,
+                            );
+                          }
+                        }
+                      : null,
                   style: FilledButton.styleFrom(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
