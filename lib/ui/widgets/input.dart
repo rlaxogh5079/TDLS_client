@@ -49,8 +49,11 @@ class _TDLSInputState extends State<TDLSInput> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                Container(
                   width: 80.w,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                  ),
                   child: TextFormField(
                     onChanged: (value) {
                       setState(() {
@@ -62,7 +65,10 @@ class _TDLSInputState extends State<TDLSInput> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 1.0,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -73,9 +79,11 @@ class _TDLSInputState extends State<TDLSInput> {
                         ),
                       ),
                       border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 1.0,
+                        ),
                       ),
-                      iconColor: Colors.grey[500],
                       labelText: widget.labelText,
                       floatingLabelStyle: TextStyle(
                         fontSize: 18.sp,
