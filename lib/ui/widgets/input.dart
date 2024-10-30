@@ -9,6 +9,8 @@ class TDLSInput extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final bool isPassword;
   final String? Function(String) validator;
+  final bool isButtonRequired;
+  final String? buttonText = null;
 
   const TDLSInput({
     super.key,
@@ -18,6 +20,7 @@ class TDLSInput extends StatefulWidget {
     required this.formKey,
     required this.validator,
     this.isPassword = false,
+    this.isButtonRequired = false,
   });
 
   @override
@@ -45,52 +48,72 @@ class _TDLSInputState extends State<TDLSInput> {
         children: [
           SizedBox(
             width: 100.w,
-            height: 8.h,
+            height: 10.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 80.w,
+                  height: 8.h,
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
-                  ),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        _errorText = validateID(value);
-                      });
-                    },
-                    controller: widget.controller,
-                    obscureText: widget.isPassword,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 1.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: widget.controller.text.isEmpty
-                              ? Colors.grey
-                              : Colors.white,
-                          width: 1.0,
-                        ),
-                      ),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
-                        ),
-                      ),
-                      labelText: widget.labelText,
-                      floatingLabelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white,
-                      ),
-                      hintText: widget.hintText,
+                    border: Border.all(
+                      color: widget.controller.text.isEmpty
+                          ? Colors.grey
+                          : Colors.white,
+                      width: 1.0,
                     ),
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          onChanged: (value) {
+                            setState(() {
+                              _errorText = validateID(value);
+                            });
+                          },
+                          controller: widget.controller,
+                          obscureText: widget.isPassword,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelText: widget.labelText,
+                            hintText: widget.hintText,
+                            floatingLabelStyle: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.white,
+                            ),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      if (widget.isButtonRequired)
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 2.w,
+                          ),
+                          child: FilledButton(
+                            onPressed: () {},
+                            style: FilledButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              disabledBackgroundColor: const Color(0x888B87FF),
+                            ),
+                            child: Text(
+                              widget.buttonText ?? "중복 확인",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ],
