@@ -72,7 +72,7 @@ class _TDLSInputState extends State<TDLSInput> {
                         child: TextFormField(
                           onChanged: (value) {
                             setState(() {
-                              _errorText = validateID(value);
+                              _errorText = widget.validator(value);
                             });
                           },
                           controller: widget.controller,
