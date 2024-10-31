@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-void createDialog(dynamic context, String title, Widget content, Widget actions,
-    [dynamic leadingIcon, bool allowBackgroundDismiss = true]) {
+void createDialog(
+    dynamic context, String title, Widget content, Widget actions) {
   showDialog(
     context: context,
-    barrierDismissible: allowBackgroundDismiss,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
@@ -14,7 +14,6 @@ void createDialog(dynamic context, String title, Widget content, Widget actions,
             actions: actions,
             title: title,
             content: content,
-            leadingIcon: leadingIcon,
           );
         },
       );
@@ -24,14 +23,12 @@ void createDialog(dynamic context, String title, Widget content, Widget actions,
 
 // ignore: must_be_immutable
 class _DynamicDialog extends StatefulWidget {
-  var leadingIcon;
   var title;
   var content;
   var actions;
 
   _DynamicDialog(
       {Key? key,
-      required this.leadingIcon,
       required this.title,
       required this.content,
       required this.actions})
@@ -55,14 +52,9 @@ class __DynamicDialogState extends State<_DynamicDialog> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: widget.leadingIcon is Icon
-              ? <Widget>[
-                  widget.leadingIcon,
-                  Text(" ${widget.title}"),
-                ]
-              : <Widget>[
-                  Text(widget.title),
-                ],
+          children: <Widget>[
+            Text(widget.title),
+          ],
         ),
         content: Container(child: widget.content),
         actions: [widget.actions],

@@ -127,8 +127,6 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                         return;
                       },
                     ),
-                    null,
-                    false,
                   );
                 },
               ),
