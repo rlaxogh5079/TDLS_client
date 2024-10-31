@@ -17,3 +17,13 @@ String? validatePassword(String? value) {
     return null;
   }
 }
+
+String? validatePasswordConfirm(String? valueOld, String? valueConfirm) {
+  if (valueOld != valueConfirm) {
+    return "비밀번호가 일치하지 않습니다.";
+  } else if (validatePassword(valueConfirm) != null) {
+    return validatePassword(valueConfirm);
+  } else {
+    return null;
+  }
+}

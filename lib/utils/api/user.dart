@@ -12,3 +12,11 @@ Future<ResponseWithAccessToken> login(String username, String password) async {
   String responseBody = utf8.decoder.convert(response.bodyBytes);
   return ResponseWithAccessToken.fromJson(json.decode(responseBody));
 }
+
+Future<GeneralResponse> checkDuplicate(String option, String value) async {
+  http.Response response = await http.post(
+    Uri.parse("$host/user/check/duplicate?option=$option&value=$value"),
+  );
+  String responseBody = utf8.decoder.convert(response.bodyBytes);
+  return GeneralResponse.fromJson(json.decode(responseBody));
+}

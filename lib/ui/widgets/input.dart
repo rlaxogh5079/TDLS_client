@@ -9,7 +9,10 @@ class TDLSInput extends StatefulWidget {
   final bool isPassword;
   final String? Function(String) validator;
   final bool isButtonRequired;
-  final String? buttonText = null;
+  final String? buttonText;
+  final bool? isCheck;
+  final Future<Null> Function()? onPressed;
+  final Null Function()? onChanged;
 
   const TDLSInput({
     super.key,
@@ -20,6 +23,10 @@ class TDLSInput extends StatefulWidget {
     required this.validator,
     this.isPassword = false,
     this.isButtonRequired = false,
+    this.buttonText,
+    this.onPressed,
+    this.onChanged,
+    this.isCheck,
   });
 
   @override
@@ -32,6 +39,10 @@ class _TDLSInputState extends State<TDLSInput> {
   @override
   void initState() {
     super.initState();
+    if (widget.isButtonRequired) {
+      assert(widget.isCheck != null, "Button의 isCheck옵션은 필수 입니다!");
+      assert(widget.onPressed != null, "Button의 onPressed 메소드는 필수로 정의되어야 합니다!");
+    }
   }
 
   @override
@@ -43,6 +54,7 @@ class _TDLSInputState extends State<TDLSInput> {
   Widget build(BuildContext context) {
     return Form(
       key: widget.formKey,
+      onChanged: widget.onChanged,
       child: Column(
         children: [
           SizedBox(
@@ -94,7 +106,11 @@ class _TDLSInputState extends State<TDLSInput> {
                             horizontal: 2.w,
                           ),
                           child: FilledButton(
-                            onPressed: () {},
+                            onPressed: widget.isCheck!
+                                ? null
+                                : () async {
+                                    widget.onPressed!();
+                                  },
                             style: FilledButton.styleFrom(
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
