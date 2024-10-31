@@ -1,5 +1,3 @@
-import 'package:client/main.dart';
-import 'package:client/ui/pages/home.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:client/utils/secure_storage.dart';
 import 'package:client/utils/model/response.dart';
@@ -8,6 +6,7 @@ import 'package:client/ui/pages/register.dart';
 import 'package:client/ui/widgets/input.dart';
 import 'package:client/ui/dialog/dialog.dart';
 import 'package:client/utils/api/user.dart';
+import 'package:client/ui/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class TDLSLoginPage extends StatefulWidget {
