@@ -1,5 +1,4 @@
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:client/utils/form_checker.dart';
 import 'package:flutter/material.dart';
 
 class TDLSInput extends StatefulWidget {
