@@ -1,6 +1,6 @@
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:client/utils/form_checker.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TDLSInput extends StatefulWidget {
   final TextEditingController controller;
@@ -48,7 +48,7 @@ class _TDLSInputState extends State<TDLSInput> {
         children: [
           SizedBox(
             width: 100.w,
-            height: 10.h,
+            height: 9.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
