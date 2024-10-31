@@ -155,7 +155,7 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                 child: FilledButton(
                   onPressed: _isButtonEnabled
                       ? () async {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
