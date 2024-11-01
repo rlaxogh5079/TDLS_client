@@ -7,7 +7,7 @@ class TDLSInput extends StatefulWidget {
   final String hintText;
   final GlobalKey<FormState> formKey;
   final bool isPassword;
-  final String? Function(String) validator;
+  final String? Function(String)? validator;
   final bool isButtonRequired;
   final String? buttonText;
   final bool? isCheck;
@@ -20,7 +20,7 @@ class TDLSInput extends StatefulWidget {
     required this.labelText,
     required this.hintText,
     required this.formKey,
-    required this.validator,
+    this.validator,
     this.isPassword = false,
     this.isButtonRequired = false,
     this.buttonText,
@@ -40,7 +40,6 @@ class _TDLSInputState extends State<TDLSInput> {
   void initState() {
     super.initState();
     if (widget.isButtonRequired) {
-      assert(widget.isCheck != null, "Button의 isCheck옵션은 필수 입니다!");
       assert(widget.onPressed != null, "Button의 onPressed 메소드는 필수로 정의되어야 합니다!");
     }
   }
@@ -83,7 +82,9 @@ class _TDLSInputState extends State<TDLSInput> {
                         child: TextFormField(
                           onChanged: (value) {
                             setState(() {
-                              _errorText = widget.validator(value);
+                              if (widget.validator != null) {
+                                _errorText = widget.validator!(value);
+                              }
                             });
                           },
                           controller: widget.controller,
@@ -105,25 +106,29 @@ class _TDLSInputState extends State<TDLSInput> {
                           padding: EdgeInsets.symmetric(
                             horizontal: 2.w,
                           ),
-                          child: FilledButton(
-                            onPressed: widget.isCheck!
-                                ? null
-                                : () async {
-                                    widget.onPressed!();
-                                  },
-                            style: FilledButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
+                          child: SizedBox(
+                            width: 12.h,
+                            child: FilledButton(
+                              onPressed: widget.isCheck!
+                                  ? null
+                                  : () async {
+                                      widget.onPressed!();
+                                    },
+                              style: FilledButton.styleFrom(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
                                 ),
+                                disabledBackgroundColor:
+                                    const Color(0x888B87FF),
                               ),
-                              disabledBackgroundColor: const Color(0x888B87FF),
-                            ),
-                            child: Text(
-                              widget.buttonText ?? "중복 확인",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.sp,
+                              child: Text(
+                                widget.buttonText ?? "중복 확인",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp,
+                                ),
                               ),
                             ),
                           ),
