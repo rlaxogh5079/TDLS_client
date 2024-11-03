@@ -7,10 +7,10 @@ class TDLSInput extends StatefulWidget {
   final String hintText;
   final GlobalKey<FormState> formKey;
   final bool isPassword;
-  final String? Function(String)? validator;
+  final String? Function(String) validator;
   final bool isButtonRequired;
   final String? buttonText;
-  final bool? isCheck;
+  final bool isCheck;
   final Future<Null> Function()? onPressed;
   final Null Function()? onChanged;
 
@@ -20,13 +20,13 @@ class TDLSInput extends StatefulWidget {
     required this.labelText,
     required this.hintText,
     required this.formKey,
-    this.validator,
+    required this.validator,
     this.isPassword = false,
     this.isButtonRequired = false,
     this.buttonText,
     this.onPressed,
     this.onChanged,
-    this.isCheck,
+    this.isCheck = false,
   });
 
   @override
@@ -82,9 +82,7 @@ class _TDLSInputState extends State<TDLSInput> {
                         child: TextFormField(
                           onChanged: (value) {
                             setState(() {
-                              if (widget.validator != null) {
-                                _errorText = widget.validator!(value);
-                              }
+                              _errorText = widget.validator(value);
                             });
                           },
                           controller: widget.controller,
@@ -109,7 +107,10 @@ class _TDLSInputState extends State<TDLSInput> {
                           child: SizedBox(
                             width: 12.h,
                             child: FilledButton(
-                              onPressed: widget.isCheck!
+                              onPressed: widget.isCheck ||
+                                      widget.validator(
+                                              widget.controller.text) !=
+                                          null
                                   ? null
                                   : () async {
                                       widget.onPressed!();
