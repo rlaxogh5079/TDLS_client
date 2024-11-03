@@ -65,7 +65,7 @@ class _TDLSInputState extends State<TDLSInput> {
                 Container(
                   width: 80.w,
                   height: 8.h,
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 4.w),
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
                     border: Border.all(
