@@ -85,50 +85,53 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                     checkDuplicateID = false;
                   });
                 },
-                onPressed: () async {
-                  GeneralResponse result =
-                      await checkDuplicate("user_id", _userIDController.text);
-                  String resultTitle = "";
-                  String resultContent = "";
-                  switch (result.statusCode) {
-                    case 200:
-                      setState(() {
-                        checkDuplicateID = true;
-                      });
-                      resultTitle = "축하합니다!";
-                      resultContent = result.message;
-                      break;
-                    case 409:
-                      resultTitle = "중복된 아이디";
-                      resultContent = result.message;
-                      break;
-                    case 422:
-                      resultTitle = "클라이언트 오류";
-                      resultContent = result.message;
-                      break;
-                    case 500:
-                      resultTitle = "서버 내부 오류";
-                      resultContent = result.message;
-                      break;
-                  }
-                  createDialog(
-                    context,
-                    resultTitle,
-                    Text(resultContent),
-                    TextButton(
-                      child: const Text("닫기"),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        try {
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        } catch (e) {
-                          return;
+                onPressed: checkDuplicateID == false
+                    ? () async {
+                        GeneralResponse result = await checkDuplicate(
+                            "user_id", _userIDController.text);
+                        String resultTitle = "";
+                        String resultContent = "";
+                        switch (result.statusCode) {
+                          case 200:
+                            setState(() {
+                              checkDuplicateID = true;
+                            });
+                            resultTitle = "축하합니다!";
+                            resultContent = result.message;
+                            break;
+                          case 409:
+                            resultTitle = "중복된 아이디";
+                            resultContent = result.message;
+                            break;
+                          case 422:
+                            resultTitle = "클라이언트 오류";
+                            resultContent = result.message;
+                            break;
+                          case 500:
+                            resultTitle = "서버 내부 오류";
+                            resultContent = result.message;
+                            break;
                         }
-                        return;
-                      },
-                    ),
-                  );
-                },
+                        createDialog(
+                          context,
+                          resultTitle,
+                          Text(resultContent),
+                          TextButton(
+                            child: const Text("닫기"),
+                            onPressed: () async {
+                              Navigator.pop(context);
+                              try {
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                              } catch (e) {
+                                return;
+                              }
+                              return;
+                            },
+                          ),
+                        );
+                      }
+                    : null,
               ),
               TDLSInput(
                 controller: _userPasswordController,
