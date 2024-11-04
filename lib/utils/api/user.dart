@@ -13,9 +13,44 @@ Future<ResponseWithAccessToken> login(String username, String password) async {
   return ResponseWithAccessToken.fromJson(json.decode(responseBody));
 }
 
+Future<GeneralResponse> register(
+    String username, String password, String nickname, String email) async {
+  Map<String, String> data = {
+    "user_id": username,
+    "password": password,
+    "nickname": nickname,
+    "email": email
+  };
+
+  http.Response response = await http.put(
+    Uri.parse("$host/user/signup"),
+    headers: {"Content-Type": "application/json"},
+    body: json.encode(data),
+  );
+
+  String responseBody = utf8.decoder.convert(response.bodyBytes);
+  return GeneralResponse.fromJson(json.decode(responseBody));
+}
+
 Future<GeneralResponse> checkDuplicate(String option, String value) async {
   http.Response response = await http.post(
     Uri.parse("$host/user/check/duplicate?option=$option&value=$value"),
+  );
+  String responseBody = utf8.decoder.convert(response.bodyBytes);
+  return GeneralResponse.fromJson(json.decode(responseBody));
+}
+
+Future<GeneralResponse> sendEmailRequest(String email) async {
+  http.Response response = await http.post(
+    Uri.parse("$host/user/email/send/verify_code?email=$email"),
+  );
+  String responseBody = utf8.decoder.convert(response.bodyBytes);
+  return GeneralResponse.fromJson(json.decode(responseBody));
+}
+
+Future<GeneralResponse> verifyEmail(String email, String verifyCode) async {
+  http.Response response = await http.post(
+    Uri.parse("$host/user/email/verify?email=$email&verify_code=$verifyCode"),
   );
   String responseBody = utf8.decoder.convert(response.bodyBytes);
   return GeneralResponse.fromJson(json.decode(responseBody));

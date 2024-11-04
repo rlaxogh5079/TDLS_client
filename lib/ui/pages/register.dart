@@ -159,8 +159,10 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const TDLSRegisterSecondPage(),
+                              builder: (context) => TDLSRegisterSecondPage(
+                                userID: _userIDController.text,
+                                password: _userPasswordController.text,
+                              ),
                             ),
                           );
                         }
