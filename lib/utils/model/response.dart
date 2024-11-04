@@ -38,7 +38,6 @@ class GeneralResponse {
   });
 
   factory GeneralResponse.fromJson(Map<String, dynamic> json) {
-    print(json);
     return GeneralResponse(
         message: json["message"] as String,
         statusCode: json["status_code"] as int,
