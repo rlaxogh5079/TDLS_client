@@ -116,19 +116,6 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                           context,
                           resultTitle,
                           Text(resultContent),
-                          TextButton(
-                            child: const Text("닫기"),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              try {
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                              } catch (e) {
-                                return;
-                              }
-                              return;
-                            },
-                          ),
                         );
                       }
                     : null,

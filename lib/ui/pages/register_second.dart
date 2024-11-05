@@ -123,19 +123,6 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                           context,
                           resultTitle,
                           Text(resultContent),
-                          TextButton(
-                            child: const Text("닫기"),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              try {
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                              } catch (e) {
-                                return;
-                              }
-                              return;
-                            },
-                          ),
                         );
                       }
                     : null,
@@ -197,19 +184,6 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                           context,
                           resultTitle,
                           Text(resultContent),
-                          TextButton(
-                            child: const Text("닫기"),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              try {
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                              } catch (e) {
-                                return;
-                              }
-                              return;
-                            },
-                          ),
                         );
                       }
                     : null,
@@ -264,19 +238,6 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                           context,
                           resultTitle,
                           Text(resultContent),
-                          TextButton(
-                            child: const Text("닫기"),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              try {
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                              } catch (e) {
-                                return;
-                              }
-                              return;
-                            },
-                          ),
                         );
                       }
                     : null,
@@ -323,24 +284,6 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                             context,
                             resultTitle,
                             Text(resultContent),
-                            TextButton(
-                              child: const Text("로그인 하기"),
-                              onPressed: () async {
-                                Navigator.pop(context);
-                                try {
-                                  ScaffoldMessenger.of(context)
-                                      .hideCurrentSnackBar();
-                                } catch (e) {
-                                  return;
-                                }
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const TDLSLoginPage(),
-                                  ),
-                                );
-                              },
-                            ),
                           );
                         }
                       : null,

@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-void createDialog(
-    dynamic context, String title, Widget content, Widget actions) {
+void createDialog(dynamic context, String title, Widget content) {
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -11,7 +10,6 @@ void createDialog(
       return StatefulBuilder(
         builder: (context, setState) {
           return _DynamicDialog(
-            actions: actions,
             title: title,
             content: content,
           );
@@ -25,14 +23,12 @@ void createDialog(
 class _DynamicDialog extends StatefulWidget {
   var title;
   var content;
-  var actions;
 
-  _DynamicDialog(
-      {Key? key,
-      required this.title,
-      required this.content,
-      required this.actions})
-      : super(key: key);
+  _DynamicDialog({
+    Key? key,
+    required this.title,
+    required this.content,
+  }) : super(key: key);
   @override
   __DynamicDialogState createState() => __DynamicDialogState();
 }
@@ -57,7 +53,20 @@ class __DynamicDialogState extends State<_DynamicDialog> {
           ],
         ),
         content: Container(child: widget.content),
-        actions: [widget.actions],
+        actions: [
+          TextButton(
+            child: const Text("닫기"),
+            onPressed: () async {
+              Navigator.pop(context);
+              try {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              } catch (e) {
+                return;
+              }
+              return;
+            },
+          ),
+        ],
       ),
     );
   }
