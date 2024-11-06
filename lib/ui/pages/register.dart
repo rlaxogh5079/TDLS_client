@@ -78,47 +78,63 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                 hintText: "아이디를 입력하세요",
                 formKey: _userIDTextFormKey,
                 validator: validateID,
-                isButtonRequired: true,
+                button: FilledButton(
+                  onPressed: checkDuplicateID == false
+                      ? () async {
+                          GeneralResponse result = await checkDuplicate(
+                              "user_id", _userIDController.text);
+                          String resultTitle = "";
+                          String resultContent = "";
+                          switch (result.statusCode) {
+                            case 200:
+                              setState(() {
+                                checkDuplicateID = true;
+                              });
+                              resultTitle = "축하합니다!";
+                              resultContent = result.message;
+                              break;
+                            case 409:
+                              resultTitle = "중복된 아이디";
+                              resultContent = result.message;
+                              break;
+                            case 422:
+                              resultTitle = "클라이언트 오류";
+                              resultContent = result.message;
+                              break;
+                            case 500:
+                              resultTitle = "서버 내부 오류";
+                              resultContent = result.message;
+                              break;
+                          }
+                          createDialog(
+                            context,
+                            resultTitle,
+                            Text(resultContent),
+                          );
+                        }
+                      : null,
+                  style: FilledButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    disabledBackgroundColor: const Color(0x888B87FF),
+                  ),
+                  child: Text(
+                    "중복 확인",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                ),
                 isCheck: checkDuplicateID,
                 onChanged: () {
                   setState(() {
                     checkDuplicateID = false;
                   });
                 },
-                onPressed: checkDuplicateID == false
-                    ? () async {
-                        GeneralResponse result = await checkDuplicate(
-                            "user_id", _userIDController.text);
-                        String resultTitle = "";
-                        String resultContent = "";
-                        switch (result.statusCode) {
-                          case 200:
-                            setState(() {
-                              checkDuplicateID = true;
-                            });
-                            resultTitle = "축하합니다!";
-                            resultContent = result.message;
-                            break;
-                          case 409:
-                            resultTitle = "중복된 아이디";
-                            resultContent = result.message;
-                            break;
-                          case 422:
-                            resultTitle = "클라이언트 오류";
-                            resultContent = result.message;
-                            break;
-                          case 500:
-                            resultTitle = "서버 내부 오류";
-                            resultContent = result.message;
-                            break;
-                        }
-                        createDialog(
-                          context,
-                          resultTitle,
-                          Text(resultContent),
-                        );
-                      }
-                    : null,
               ),
               TDLSInput(
                 controller: _userPasswordController,

@@ -8,10 +8,8 @@ class TDLSInput extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final bool isPassword;
   final String? Function(String)? validator;
-  final bool isButtonRequired;
-  final String? buttonText;
+  final FilledButton? button;
   final bool isCheck;
-  final Future<Null> Function()? onPressed;
   final Null Function()? onChanged;
 
   const TDLSInput({
@@ -21,10 +19,8 @@ class TDLSInput extends StatefulWidget {
     required this.hintText,
     required this.formKey,
     this.validator,
+    this.button,
     this.isPassword = false,
-    this.isButtonRequired = false,
-    this.buttonText,
-    this.onPressed,
     this.onChanged,
     this.isCheck = false,
   });
@@ -98,32 +94,14 @@ class _TDLSInputState extends State<TDLSInput> {
                           ),
                         ),
                       ),
-                      if (widget.isButtonRequired)
+                      if (widget.button != null)
                         Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 2.w,
                           ),
                           child: SizedBox(
                             width: 12.h,
-                            child: FilledButton(
-                              onPressed: widget.onPressed,
-                              style: FilledButton.styleFrom(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
-                                  ),
-                                ),
-                                disabledBackgroundColor:
-                                    const Color(0x888B87FF),
-                              ),
-                              child: Text(
-                                widget.buttonText ?? "중복 확인",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp,
-                                ),
-                              ),
-                            ),
+                            child: widget.button,
                           ),
                         ),
                     ],

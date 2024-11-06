@@ -85,72 +85,23 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                 hintText: "닉네임을 입력하세요",
                 formKey: _userNicknameTextFormKey,
                 validator: validateNickname,
-                isButtonRequired: true,
-                isCheck: checkDuplicateNickname,
-                onChanged: () {
-                  setState(() {
-                    checkDuplicateNickname = false;
-                  });
-                },
-                onPressed: checkDuplicateNickname == false
-                    ? () async {
-                        GeneralResponse result = await checkDuplicate(
-                            "nickname", _userNicknameController.text);
-                        String resultTitle = "";
-                        String resultContent = "";
-                        switch (result.statusCode) {
-                          case 200:
-                            setState(() {
-                              checkDuplicateNickname = true;
-                            });
-                            resultTitle = "축하합니다!";
-                            resultContent = result.message;
-                            break;
-                          case 409:
-                            resultTitle = "중복된 닉네임";
-                            resultContent = result.message;
-                            break;
-                          case 422:
-                            resultTitle = "클라이언트 오류";
-                            resultContent = result.message;
-                            break;
-                          case 500:
-                            resultTitle = "서버 내부 오류";
-                            resultContent = result.message;
-                            break;
-                        }
-                        createDialog(
-                          context,
-                          resultTitle,
-                          Text(resultContent),
-                        );
-                      }
-                    : null,
-              ),
-              TDLSInput(
-                controller: _userEmailController,
-                labelText: "이메일",
-                hintText: "이메일을 입력하세요",
-                formKey: _userEmailTextFormKey,
-                validator: validateEmail,
-                isCheck: checkDuplicateEmail,
-                isButtonRequired: true,
-                buttonText: checkDuplicateEmail ? "재요청" : "인증 요청",
-                onPressed: isRequestEmail == false
-                    ? () async {
-                        setState(() {
-                          isRequestEmail = true;
-                        });
-                        GeneralResponse result = await checkDuplicate(
-                          "email",
-                          _userEmailController.text,
-                        );
-                        String resultTitle = "";
-                        String resultContent = "";
-                        if (result.statusCode != 200) {
+                button: FilledButton(
+                  onPressed: checkDuplicateNickname == false
+                      ? () async {
+                          GeneralResponse result = await checkDuplicate(
+                              "nickname", _userNicknameController.text);
+                          String resultTitle = "";
+                          String resultContent = "";
                           switch (result.statusCode) {
+                            case 200:
+                              setState(() {
+                                checkDuplicateNickname = true;
+                              });
+                              resultTitle = "축하합니다!";
+                              resultContent = result.message;
+                              break;
                             case 409:
-                              resultTitle = "중복된 이메일";
+                              resultTitle = "중복된 닉네임";
                               resultContent = result.message;
                               break;
                             case 422:
@@ -162,16 +113,145 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                               resultContent = result.message;
                               break;
                           }
-                        } else {
-                          checkDuplicateEmail = true;
-                          GeneralResponse result =
-                              await sendEmailRequest(_userEmailController.text);
+                          createDialog(
+                            context,
+                            resultTitle,
+                            Text(resultContent),
+                          );
+                        }
+                      : null,
+                  style: FilledButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    disabledBackgroundColor: const Color(0x888B87FF),
+                  ),
+                  child: Text(
+                    "중복 확인",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                ),
+                isCheck: checkDuplicateNickname,
+                onChanged: () {
+                  setState(() {
+                    checkDuplicateNickname = false;
+                  });
+                },
+              ),
+              TDLSInput(
+                controller: _userEmailController,
+                labelText: "이메일",
+                hintText: "이메일을 입력하세요",
+                formKey: _userEmailTextFormKey,
+                validator: validateEmail,
+                isCheck: checkDuplicateEmail,
+                button: FilledButton(
+                  onPressed: isRequestEmail == false
+                      ? () async {
+                          setState(() {
+                            isRequestEmail = true;
+                          });
+                          GeneralResponse result = await checkDuplicate(
+                            "email",
+                            _userEmailController.text,
+                          );
+                          String resultTitle = "";
+                          String resultContent = "";
+                          if (result.statusCode != 200) {
+                            switch (result.statusCode) {
+                              case 409:
+                                resultTitle = "중복된 이메일";
+                                resultContent = result.message;
+                                break;
+                              case 422:
+                                resultTitle = "클라이언트 오류";
+                                resultContent = result.message;
+                                break;
+                              case 500:
+                                resultTitle = "서버 내부 오류";
+                                resultContent = result.message;
+                                break;
+                            }
+                          } else {
+                            checkDuplicateEmail = true;
+                            GeneralResponse result = await sendEmailRequest(
+                                _userEmailController.text);
+                            switch (result.statusCode) {
+                              case 200:
+                                setState(() {
+                                  checkDuplicateNickname = true;
+                                });
+                                resultTitle = "메일 전송 성공!";
+                                resultContent = result.message;
+                                break;
+                              case 500:
+                                resultTitle = "서버 내부 오류";
+                                resultContent = result.message;
+                                break;
+                            }
+                          }
+                          createDialog(
+                            context,
+                            resultTitle,
+                            Text(resultContent),
+                          );
+                        }
+                      : null,
+                  style: FilledButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    disabledBackgroundColor: const Color(0x888B87FF),
+                  ),
+                  child: Text(
+                    checkDuplicateEmail ? "재요청" : "인증 요청",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                ),
+              ),
+              TDLSInput(
+                controller: _emailVerifyController,
+                labelText: "인증번호",
+                hintText: "인증번호를 입력하세요",
+                formKey: _emailVerifyTextFormKey,
+                isCheck: verifiedEmail,
+                button: FilledButton(
+                  onPressed: isRequestEmail && !verifiedEmail
+                      ? () async {
+                          GeneralResponse result = await verifyEmail(
+                              _userEmailController.text,
+                              _emailVerifyController.text);
+
+                          String resultTitle = "";
+                          String resultContent = "";
                           switch (result.statusCode) {
                             case 200:
                               setState(() {
-                                checkDuplicateNickname = true;
+                                verifiedEmail = true;
                               });
-                              resultTitle = "메일 전송 성공!";
+                              resultTitle = "인증 완료";
+                              resultContent = result.message;
+                              break;
+                            case 401:
+                              resultTitle = "잘못된 인증 코드";
+                              resultContent = result.message;
+                              break;
+                            case 408:
+                              resultTitle = "시간 초과";
+                              resultContent = result.message;
+                              break;
+                            case 422:
+                              resultTitle = "클라이언트 오류";
                               resultContent = result.message;
                               break;
                             case 500:
@@ -179,68 +259,34 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                               resultContent = result.message;
                               break;
                           }
-                        }
-                        createDialog(
-                          context,
-                          resultTitle,
-                          Text(resultContent),
-                        );
-                      }
-                    : null,
-              ),
-              TDLSInput(
-                controller: _emailVerifyController,
-                labelText: "인증번호",
-                hintText: "인증번호를 입력하세요",
-                formKey: _emailVerifyTextFormKey,
-                isButtonRequired: true,
-                isCheck: verifiedEmail,
-                buttonText: "인증",
-                onPressed: isRequestEmail && !verifiedEmail
-                    ? () async {
-                        GeneralResponse result = await verifyEmail(
-                            _userEmailController.text,
-                            _emailVerifyController.text);
-
-                        String resultTitle = "";
-                        String resultContent = "";
-                        switch (result.statusCode) {
-                          case 200:
+                          if (!verifiedEmail) {
                             setState(() {
-                              verifiedEmail = true;
+                              isRequestEmail = false;
                             });
-                            resultTitle = "인증 완료";
-                            resultContent = result.message;
-                            break;
-                          case 401:
-                            resultTitle = "잘못된 인증 코드";
-                            resultContent = result.message;
-                            break;
-                          case 408:
-                            resultTitle = "시간 초과";
-                            resultContent = result.message;
-                            break;
-                          case 422:
-                            resultTitle = "클라이언트 오류";
-                            resultContent = result.message;
-                            break;
-                          case 500:
-                            resultTitle = "서버 내부 오류";
-                            resultContent = result.message;
-                            break;
+                          }
+                          createDialog(
+                            context,
+                            resultTitle,
+                            Text(resultContent),
+                          );
                         }
-                        if (!verifiedEmail) {
-                          setState(() {
-                            isRequestEmail = false;
-                          });
-                        }
-                        createDialog(
-                          context,
-                          resultTitle,
-                          Text(resultContent),
-                        );
-                      }
-                    : null,
+                      : null,
+                  style: FilledButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    disabledBackgroundColor: const Color(0x888B87FF),
+                  ),
+                  child: Text(
+                    "중복 확인",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 3.h),
               SizedBox(
