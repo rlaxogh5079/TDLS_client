@@ -77,7 +77,7 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                 labelText: "아이디",
                 hintText: "아이디를 입력하세요",
                 formKey: _userIDTextFormKey,
-                validator: validateID,
+                errorText: validateID(_userIDController.text),
                 button: FilledButton(
                   onPressed: checkDuplicateID == false
                       ? () async {
@@ -142,7 +142,7 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                 hintText: "비밀번호를 입력하세요",
                 formKey: _userPasswordTextFormKey,
                 isPassword: true,
-                validator: validatePassword,
+                errorText: validatePassword(_userPasswordController.text),
               ),
               TDLSInput(
                 controller: _userPasswordConfirmController,
@@ -150,7 +150,8 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                 hintText: "비밀번호를 다시 입력하세요",
                 formKey: _userPasswordConfirmKey,
                 isPassword: true,
-                validator: validatePassword,
+                errorText: validatePasswordConfirm(_userPasswordController.text,
+                    _userPasswordConfirmController.text),
               ),
               SizedBox(height: 3.h),
               SizedBox(

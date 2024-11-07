@@ -75,7 +75,7 @@ class _TDLSLoginPageState extends State<TDLSLoginPage> {
                 labelText: "아이디",
                 hintText: "아이디를 입력하세요",
                 formKey: _userIDTextFormKey,
-                validator: validateID,
+                errorText: validateID(_userIDController.text),
               ),
               TDLSInput(
                 controller: _userPasswordController,
@@ -83,7 +83,7 @@ class _TDLSLoginPageState extends State<TDLSLoginPage> {
                 hintText: "비밀번호를 입력하세요",
                 formKey: _userPasswordTextFormKey,
                 isPassword: true,
-                validator: validatePassword,
+                errorText: validatePassword(_userPasswordController.text),
               ),
               SizedBox(height: 3.h),
               SizedBox(

@@ -7,10 +7,10 @@ class TDLSInput extends StatefulWidget {
   final String hintText;
   final GlobalKey<FormState> formKey;
   final bool isPassword;
-  final String? Function(String)? validator;
   final FilledButton? button;
   final bool isCheck;
   final Null Function()? onChanged;
+  final String? errorText;
 
   const TDLSInput({
     super.key,
@@ -18,7 +18,7 @@ class TDLSInput extends StatefulWidget {
     required this.labelText,
     required this.hintText,
     required this.formKey,
-    this.validator,
+    this.errorText,
     this.button,
     this.isPassword = false,
     this.onChanged,
@@ -30,8 +30,6 @@ class TDLSInput extends StatefulWidget {
 }
 
 class _TDLSInputState extends State<TDLSInput> {
-  String? _errorText;
-
   @override
   void initState() {
     super.initState();
@@ -73,13 +71,6 @@ class _TDLSInputState extends State<TDLSInput> {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          onChanged: (value) {
-                            setState(() {
-                              if (widget.validator != null) {
-                                _errorText = widget.validator!(value);
-                              }
-                            });
-                          },
                           controller: widget.controller,
                           obscureText: widget.isPassword,
                           keyboardType: TextInputType.text,
@@ -111,7 +102,7 @@ class _TDLSInputState extends State<TDLSInput> {
             ),
           ),
           Text(
-            _errorText ?? '',
+            widget.errorText ?? '',
             style: TextStyle(
               color: Colors.red,
               fontSize: 16.sp,

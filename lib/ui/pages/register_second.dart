@@ -84,7 +84,7 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                 labelText: "닉네임",
                 hintText: "닉네임을 입력하세요",
                 formKey: _userNicknameTextFormKey,
-                validator: validateNickname,
+                errorText: validateNickname(_userNicknameController.text),
                 button: FilledButton(
                   onPressed: checkDuplicateNickname == false
                       ? () async {
@@ -148,7 +148,7 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                 labelText: "이메일",
                 hintText: "이메일을 입력하세요",
                 formKey: _userEmailTextFormKey,
-                validator: validateEmail,
+                errorText: validateEmail(_userEmailController.text),
                 isCheck: checkDuplicateEmail,
                 button: FilledButton(
                   onPressed: isRequestEmail == false
