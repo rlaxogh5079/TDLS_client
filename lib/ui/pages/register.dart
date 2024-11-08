@@ -79,7 +79,8 @@ class _TDLSRegisterPageState extends State<TDLSRegisterPage> {
                 formKey: _userIDTextFormKey,
                 errorText: validateID(_userIDController.text),
                 button: FilledButton(
-                  onPressed: checkDuplicateID == false
+                  onPressed: checkDuplicateID == false &&
+                          validateID(_userIDController.text) == null
                       ? () async {
                           GeneralResponse result = await checkDuplicate(
                               "user_id", _userIDController.text);

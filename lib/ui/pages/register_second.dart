@@ -86,7 +86,8 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                 formKey: _userNicknameTextFormKey,
                 errorText: validateNickname(_userNicknameController.text),
                 button: FilledButton(
-                  onPressed: checkDuplicateNickname == false
+                  onPressed: checkDuplicateNickname == false &&
+                          validateNickname(_userNicknameController.text) == null
                       ? () async {
                           GeneralResponse result = await checkDuplicate(
                               "nickname", _userNicknameController.text);
@@ -151,7 +152,8 @@ class _TDLSRegisterSecondPage extends State<TDLSRegisterSecondPage> {
                 errorText: validateEmail(_userEmailController.text),
                 isCheck: checkDuplicateEmail,
                 button: FilledButton(
-                  onPressed: isRequestEmail == false
+                  onPressed: isRequestEmail == false &&
+                          validateEmail(_userEmailController.text) == null
                       ? () async {
                           setState(() {
                             isRequestEmail = true;
